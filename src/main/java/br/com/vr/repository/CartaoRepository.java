@@ -1,5 +1,6 @@
 package br.com.vr.repository;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,8 @@ import br.com.vr.domain.Cartao;
 public interface CartaoRepository extends JpaRepository<Cartao, Long> {
 
 	public Optional<Cartao> findByNumero(Long numero);
+
+	public Optional<Cartao> findByNumeroAndSenha(Long numero, String senha);
+
+	public Optional<Cartao> findByNumeroAndSaldoGreaterThanEqual(Long numero, BigDecimal valor);
 }

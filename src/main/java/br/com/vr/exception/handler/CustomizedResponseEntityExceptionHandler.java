@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import br.com.vr.dto.CartaoDTO;
 import br.com.vr.exception.CartaoExistenteException;
 import br.com.vr.exception.CartaoInexistenteException;
+import br.com.vr.exception.CartaoSaldoInsuficienteException;
+import br.com.vr.exception.CartaoSenhaInvalidaException;
+import br.com.vr.exception.TransacaoCartaoInexistenteException;
 
 @RestController
 @ControllerAdvice
@@ -24,5 +27,20 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	@ExceptionHandler(CartaoInexistenteException.class)
 	public final ResponseEntity<?> handleCartaoInexistenteExceptions(CartaoInexistenteException exception, WebRequest webRequest) {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(TransacaoCartaoInexistenteException.class)
+	public final ResponseEntity<String> handleTransacaoCartaoInexistenteExceptions(TransacaoCartaoInexistenteException exception, WebRequest webRequest) {
+		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(CartaoSenhaInvalidaException.class)
+	public final ResponseEntity<String> handleCartaoSenhaInvalidaExceptions(CartaoSenhaInvalidaException exception, WebRequest webRequest) {
+		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(CartaoSaldoInsuficienteException.class)
+	public final ResponseEntity<String> handleCartaoSaldoInsuficienteExceptions(CartaoSaldoInsuficienteException exception, WebRequest webRequest) {
+		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }

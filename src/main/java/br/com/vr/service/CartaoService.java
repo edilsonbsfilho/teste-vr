@@ -8,11 +8,15 @@ import java.util.NoSuchElementException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vr.domain.Cartao;
 import br.com.vr.dto.CartaoDTO;
 import br.com.vr.exception.CartaoExistenteException;
 import br.com.vr.exception.CartaoInexistenteException;
+import br.com.vr.exception.CartaoSaldoInsuficienteException;
+import br.com.vr.exception.CartaoSenhaInvalidaException;
 import br.com.vr.repository.CartaoRepository;
 
 @Service
@@ -43,6 +47,7 @@ public class CartaoService {
 		} 
 	}
 	
+	@Transactional
 	public CartaoDTO incluir(CartaoDTO cartaoDTO) {
 		
 		try {
@@ -53,8 +58,14 @@ public class CartaoService {
 			return modelMapper.map(cartaoRepository.save(cartao), CartaoDTO.class);
 		}
 	}
-
-
+	
+	@Transactional(propagation = Propagation.NEVER)
+	public void debitar(CartaoDTO cartaoDTO) {
+		Cartao cartao = cartaoRepository.findByNumero(cartaoDTO.getNumero()).get();
+		cartao.setSaldo(cartaoDTO.getSaldo());
+		cartaoRepository.save(cartao);
+	}
+	
 	private Cartao obterEntidadeCartao(CartaoDTO cartaoDTO) {
 		Cartao cartao = new Cartao();
 		cartao.setNumero(cartaoDTO.getNumero());
@@ -64,4 +75,20 @@ public class CartaoService {
 		cartao.setSaldo(BigDecimal.valueOf(SALDO_INICIAL));
 		return cartao;
 	}
+
+	public void obterPorNumeroESenha(Long numero, String senha) {
+		try {
+			cartaoRepository.findByNumeroAndSenha(numero, senha).orElseThrow();
+		} catch (Exception e) {
+			throw new CartaoSenhaInvalidaException();
+		}
+	}
+
+	public void obterPorNumeroESaldo(Long numero, BigDecimal valor) {
+		try {
+			cartaoRepository.findByNumeroAndSaldoGreaterThanEqual(numero, valor).orElseThrow();
+		} catch (Exception e) {
+			throw new CartaoSaldoInsuficienteException();
+		}
+	}	
 }
