@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vr.dto.CartaoDTO;
 import br.com.vr.dto.TransacaoDTO;
@@ -16,6 +17,7 @@ public class TransacaoService {
 	@Autowired
 	private CartaoService cartaoService;
 
+	@Transactional
 	public void autorizar(TransacaoDTO transacaoDTO) {
 		
 		CartaoDTO cartaoDTO;

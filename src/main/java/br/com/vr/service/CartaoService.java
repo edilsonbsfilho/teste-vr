@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +60,7 @@ public class CartaoService {
 		}
 	}
 	
-	@Transactional(propagation = Propagation.NEVER)
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public void debitar(CartaoDTO cartaoDTO) {
 		Cartao cartao = cartaoRepository.findByNumero(cartaoDTO.getNumero()).get();
 		cartao.setSaldo(cartaoDTO.getSaldo());
