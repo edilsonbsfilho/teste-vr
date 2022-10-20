@@ -23,6 +23,6 @@ public class TransacaoController {
 	@PostMapping
 	public ResponseEntity<String> autorizar(@RequestBody TransacaoDTO transacaoDTO) {
 		transacaoService.autorizar(transacaoDTO);
-		return new ResponseEntity<String>(TRANSACAO_OK, HttpStatus.CREATED);
+		return new ResponseEntity<>(TRANSACAO_OK, HttpStatus.CREATED);
 	}
 }

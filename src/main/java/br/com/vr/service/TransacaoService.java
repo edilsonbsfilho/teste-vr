@@ -28,19 +28,11 @@ public class TransacaoService {
 			throw new TransacaoCartaoInexistenteException();
 		}
 		
-		validarSenha(transacaoDTO.getNumero(), transacaoDTO.getSenha());
-		validarSaldoDisponivel(transacaoDTO.getNumero(), transacaoDTO.getValor());
+		cartaoService.validarSenha(transacaoDTO.getSenha(), cartaoDTO.getSenha());
+		cartaoService.validarPorNumeroESaldo(transacaoDTO.getNumero(), transacaoDTO.getValor());
 		
 		BigDecimal novoSaldo = cartaoDTO.getSaldo().subtract(transacaoDTO.getValor());
 		cartaoDTO.setSaldo(novoSaldo);
 		cartaoService.debitar(cartaoDTO);
-	}
-
-	private void validarSenha(Long numero, String senha) {
-		cartaoService.obterPorNumeroESenha(numero, senha);		
-	}
-
-	private void validarSaldoDisponivel(Long numero, BigDecimal valor) {
-		cartaoService.obterPorNumeroESaldo(numero, valor);
 	}
 }

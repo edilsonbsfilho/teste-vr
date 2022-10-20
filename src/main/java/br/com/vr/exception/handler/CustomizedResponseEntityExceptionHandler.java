@@ -21,26 +21,26 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 	@ExceptionHandler(CartaoExistenteException.class)
 	public final ResponseEntity<CartaoDTO> handleCartaoExistenteExceptions(CartaoExistenteException exception, WebRequest webRequest) {
-		return new ResponseEntity<CartaoDTO>(exception.getCartao(), HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<>(exception.getCartao(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
 	@ExceptionHandler(CartaoInexistenteException.class)
-	public final ResponseEntity<?> handleCartaoInexistenteExceptions(CartaoInexistenteException exception, WebRequest webRequest) {
+	public final ResponseEntity<Void> handleCartaoInexistenteExceptions(CartaoInexistenteException exception, WebRequest webRequest) {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(TransacaoCartaoInexistenteException.class)
 	public final ResponseEntity<String> handleTransacaoCartaoInexistenteExceptions(TransacaoCartaoInexistenteException exception, WebRequest webRequest) {
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
 	@ExceptionHandler(CartaoSenhaInvalidaException.class)
 	public final ResponseEntity<String> handleCartaoSenhaInvalidaExceptions(CartaoSenhaInvalidaException exception, WebRequest webRequest) {
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
 	@ExceptionHandler(CartaoSaldoInsuficienteException.class)
 	public final ResponseEntity<String> handleCartaoSaldoInsuficienteExceptions(CartaoSaldoInsuficienteException exception, WebRequest webRequest) {
-		return new ResponseEntity<String>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }

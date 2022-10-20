@@ -19,5 +19,8 @@ Optei por organizar o projeto da seguinte forma/pacotes:
 - util (outro pacote que gosto de criar por padrão para colocar classes utilitárias que ao longo do ciclo de vida do software vão tendo a necessidade de serem criadas. Conversores, Formatadores, Validadores, etc.)
 
 Para a questão de não usar "IF" escolhi adotar a estratégia de combinar o lançamento de exceção para cada situação de validar ou não uma condição.
+Resolvi adotar o recurso de criptografia do spring security (PasswordEncoder) para cadastrar a senha. 
+Nesse caso, não achei uma solução para validar a igualdade da senha sem "IF" pois a forma de comparação é feita pelo matches, após a recuperação do registro.
 
-Em relação à concorrência, resolvi adotar a anotação @Transactional(isolation = Isolation.READ_COMMITTED), dessa forma o regitro lido por uma transação será o que já foi atualizado por outra transação.
+Em relação à concorrência, resolvi adotar a anotação @Transactional(isolation = Isolation.READ_COMMITTED), 
+dessa forma o regitro lido por uma transação será o que já foi atualizado por outra transação.

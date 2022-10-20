@@ -30,13 +30,13 @@ public class CartaoController {
 	
 	@PostMapping
 	public ResponseEntity<CartaoDTO> incluir(@RequestBody CartaoDTO cartaoDTO) {
-		CartaoDTO novoCartao = cartaoService.incluir(cartaoDTO);
-		return new ResponseEntity<CartaoDTO>(novoCartao, HttpStatus.CREATED);
+		cartaoService.incluir(cartaoDTO);
+		return new ResponseEntity<>(cartaoDTO, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{numeroCartao}")
 	public ResponseEntity<BigDecimal> obterSaldo(@PathVariable("numeroCartao") Long numeroCartao) {
 		BigDecimal saldo = cartaoService.obterPorNumero(numeroCartao).getSaldo();
-		return new ResponseEntity<BigDecimal>(saldo, HttpStatus.OK);
+		return new ResponseEntity<>(saldo, HttpStatus.OK);
 	}
 }

@@ -10,7 +10,7 @@ public class CartaoExistenteException extends RuntimeException {
 
 	private static final long serialVersionUID = -7266911300346523054L;
 	
-	private CartaoDTO cartao;
+	private final CartaoDTO cartao;
 	
 	public CartaoExistenteException(CartaoDTO cartao) {
 		this.cartao = cartao;
